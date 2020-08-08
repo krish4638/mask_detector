@@ -9,30 +9,22 @@ import math
 
 
 def inference(image):
-    # load our serialized face detector model from disk
     print("[INFO] loading face detector model...")
     prototxtPath = os.path.sep.join(['face_detector', "deploy.prototxt"])
     weightsPath = os.path.sep.join(['face_detector', "res10_300x300_ssd_iter_140000.caffemodel"])
     net = cv2.dnn.readNet(prototxtPath, weightsPath)
-
-    # load the face mask detector model from disk
     print("[INFO] loading face mask detector model...")
     model = load_model('mask_detector.model')
 
-    # load the input image from disk, clone it, and grab the image spatial dimensions
     image = cv2.imread(image)
     orig = image.copy()
     (h, w) = image.shape[:2]
-
-    # construct a blob from the image
     blob = cv2.dnn.blobFromImage(image, 1.0, (300, 300), (104.0, 177.0, 123.0))
 
-    # pass the blob through the network and obtain the face detections
     print("[INFO] computing face detections...")
     net.setInput(blob)
     detections = net.forward()
 
-    # loop over the detections
     for i in range(0, detections.shape[2]):
         confidence = detections[0, 0, i, 2]
         if confidence > 0.5:
