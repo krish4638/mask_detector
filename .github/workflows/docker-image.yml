@@ -9,5 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Docker Login
+      run: docker login --username ${{ secrets.DOCKER_id }} --password ${{ secrets.DOCKER_PASSWORD }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag mask_detector:latest
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_id }}/mask_detector:latest
+    - name: Push docker image to docker hub
+      run: docker push ${{ secrets.DOCKER_id }}/mask_detector:latest
