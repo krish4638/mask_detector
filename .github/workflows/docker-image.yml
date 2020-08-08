@@ -10,8 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Docker Login
-      run: docker login --username ${{ secrets.DOCKER_id }} --password ${{ secrets.DOCKER_PASSWORD }}
+      run: docker login --username ${{ secrets.DOCKER_ID }} --password ${{ secrets.DOCKER_PASSWORD }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_id }}/mask_detector:latest
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_ID }}/mask_detector:latest
     - name: Push docker image to docker hub
-      run: docker push ${{ secrets.DOCKER_id }}/mask_detector:latest
+      run: docker push ${{ secrets.DOCKER_ID }}/mask_detector:latest
